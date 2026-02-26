@@ -505,6 +505,17 @@
         letter-spacing: 1.2px; /* и уменьшаем разрядку */
       }
     }
+    .formMessage{
+      margin-top: 16px;
+      font-size: 15px;
+      color: var(--green2);
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+    
+    .formMessage.show{
+      opacity: 1;
+    }
   </style>
 </head>
 
@@ -642,7 +653,7 @@
       <div class="card reveal delay-1">
         <h2>Подтвердите участие</h2>
 
-        <form action="https://formspree.io/f/mreajlkn" method="POST">
+        <form id="rsvpForm" novalidate>
           <div class="field">
             <input type="text" name="name" placeholder="Ваше имя и фамилия" required />
 
@@ -670,6 +681,7 @@
             </select>
 
             <button class="submit" type="submit">Отправить</button>
+            <div id="formMessage" class="formMessage"></div>
           </div>
         </form>
 
@@ -738,8 +750,97 @@
     });
   </script>
 
+      <script>
+      // ====== Google Form endpoint ======
+      const GOOGLE_FORM_ACTION =
+        "https://docs.google.com/forms/d/e/1FAIpQLSfAPInlh7hJSj9Uv9wcC-7h3omRyKeVpTCJsgNZAQfIBWPj9Q/formResponse";
+    
+      // ====== Entry IDs из твоей prefill-ссылки ======
+      const ENTRY_NAME = "entry.86826611";
+      const ENTRY_ATTEND = "entry.1282187122";
+      const ENTRY_GUESTS = "entry.1691305355";
+    
+      // ====== Отправка RSVP в Google Forms ======
+      const rsvpForm = document.getElementById("rsvpForm");
+    
+      rsvpForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+    
+        const name = rsvpForm.querySelector('input[name="name"]').value.trim();
+        const attendance = rsvpForm.querySelector('input[name="attendance"]:checked')?.value;
+        const guestsEl = document.getElementById("guests");
+    
+        // guests учитываем только если поле видно (и человек идет)
+        const guestsVisible = guestsEl && guestsEl.style.display !== "none";
+        const guests = guestsVisible ? guestsEl.value : "";
+    
+        // Простейшая проверка
+        if (!name) {
+          alert("Пожалуйста, введите имя и фамилию.");
+          return;
+        }
+        if (!attendance) {
+          alert("Пожалуйста, выберите вариант ответа.");
+          return;
+        }
+        if (attendance === "yes" && !guests) {
+          alert("Пожалуйста, выберите количество гостей.");
+          return;
+        }
+    
+        const data = new FormData();
+        data.append(ENTRY_NAME, name);
+        data.append(ENTRY_ATTEND, attendance === "yes" ? "Да, с радостью!" : "К сожалению, не смогу");
+        if (attendance === "yes") data.append(ENTRY_GUESTS, guests);
+    
+        // UI: можно сделать кнопку неактивной на время отправки
+        const submitBtn = rsvpForm.querySelector('button[type="submit"]');
+        const prevText = submitBtn ? submitBtn.textContent : "";
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.style.opacity = "0.7";
+          submitBtn.textContent = "Отправляем...";
+        }
+    
+        try {
+          // Google Forms корректно принимает no-cors
+          await fetch(GOOGLE_FORM_ACTION, {
+            method: "POST",
+            mode: "no-cors",
+            body: data,
+          });
+    
+          // Сброс формы
+          rsvpForm.reset();
+          const messageEl = document.getElementById("formMessage");
+          messageEl.textContent = "Спасибо! Ваш ответ успешно отправлен ✨";
+          messageEl.classList.add("show");
+          
+          setTimeout(() => {
+            messageEl.classList.remove("show");
+          }, 5000);
+    
+          // Вернуть "Да" по умолчанию (как у тебя было)
+          const yesRadio = rsvpForm.querySelector('input[name="attendance"][value="yes"]');
+          if (yesRadio) yesRadio.checked = true;
+    
+          // Если у тебя есть функция syncRSVP() (в твоем коде она есть) — применим снова
+          if (typeof syncRSVP === "function") syncRSVP();
+    
+        } catch (err) {
+          alert("Не удалось отправить. Попробуйте ещё раз 🙏");
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = "";
+            submitBtn.textContent = prevText;
+          }
+        }
+      });
+    </script>
 </body>
 </html>
+
 
 
 
