@@ -4,109 +4,506 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Приглашение на свадьбу Кирилла и Дарьи</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;500;600&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      margin: 0;
-      font-family: 'Montserrat', sans-serif;
-      background: #f8f5f1;
-      color: #2b2b2b;
-      text-align: center;
+    :root{
+      --bg: #f4f0e8;        /* тёплый светлый фон */
+      --card: rgba(255,255,255,.78);
+      --text: #1f2421;
+      --muted: rgba(31,36,33,.75);
+
+      --green: #123a2a;     /* тёмно-зелёный */
+      --green2:#0f2f23;
+      --brown:#8a6b42;      /* коричневый/золото */
+      --brown2:#6f5230;
+
+      --shadow: 0 14px 40px rgba(0,0,0,.08);
+      --radius: 22px;
     }
-    section {
-      padding: 70px 20px;
-      max-width: 900px;
-      margin: auto;
+
+    *{ box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family:'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      text-align:center;
     }
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 48px;
-      margin-bottom: 10px;
+
+    .wrap{ max-width: 980px; margin:0 auto; padding: 0 18px; }
+
+    section{ padding: 70px 0; }
+    .card{
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 44px 18px;
+      backdrop-filter: blur(6px);
     }
-    h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 32px;
-      margin-bottom: 20px;
+
+    h1,h2,h3{ margin:0; }
+    h1{
+      font-family:'Playfair Display', serif;
+      font-size: 46px;
+      letter-spacing: .5px;
     }
-    .date {
-      font-size: 20px;
-      letter-spacing: 2px;
+    h2{
+      font-family:'Playfair Display', serif;
+      font-size: 34px;
+      margin-bottom: 16px;
+    }
+
+    .divider{
+      width: 86px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--brown), transparent);
+      margin: 18px auto 0;
+      border-radius: 99px;
+    }
+
+    /* HERO */
+    .hero{
+      padding-top: 86px;
+      padding-bottom: 44px;
+    }
+    .names{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 14px;
+      flex-wrap:wrap;
+    }
+    .heart{
+      color: var(--brown);
+      font-size: 22px;
+      transform: translateY(2px);
+    }
+    .subtitle{
       margin-top: 10px;
-    }
-    .card {
-      background: #ffffff;
-      padding: 40px 20px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 14px 28px;
-      background: #b99b6b;
-      color: white;
-      text-decoration: none;
-      border-radius: 30px;
-      font-weight: 500;
-      transition: 0.2s;
-    }
-    .btn:hover {
-      background: #a7895d;
-    }
-    input, select {
-      padding: 12px;
-      margin: 10px 0;
-      width: 90%;
-      max-width: 320px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
+      color: var(--muted);
       font-size: 16px;
+      line-height: 1.55;
+      max-width: 760px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .intro{
+      margin-top: 16px;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 820px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    /* DATE CALENDAR (как реф 2 по смыслу/композиции) */
+    .dateTitle{
+      font-family:'Playfair Display', serif;
+      font-size: 34px;
+      margin-bottom: 18px;
+    }
+    .monthRow{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      align-items:baseline;
+      margin-bottom: 18px;
+      color: var(--green);
+    }
+    .monthRow .month{
+      font-weight:600;
+      letter-spacing: .8px;
+      text-transform: lowercase;
+      color: var(--brown2);
+    }
+    .monthRow .year{
+      font-weight:500;
+      letter-spacing: 1px;
+      color: var(--brown2);
+      opacity:.9;
+    }
+    .calendar{
+      width: min(420px, 92vw);
+      margin: 0 auto;
+      padding: 18px 16px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.65);
+      box-shadow: 0 10px 26px rgba(0,0,0,.06);
+      border: 1px solid rgba(138,107,66,.18);
+    }
+    .dow, .days{
+      display:grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+    .dow div{
+      font-size: 12px;
+      letter-spacing: .7px;
+      color: rgba(18,58,42,.75);
+      padding: 6px 0 8px;
+    }
+    .days div{
+      font-size: 14px;
+      padding: 9px 0;
+      border-radius: 12px;
+      color: rgba(31,36,33,.85);
+    }
+    .days div.empty{ opacity:0; }
+    .days div.active{
+      outline: 2px solid rgba(138,107,66,.55);
+      color: var(--green2);
+      font-weight:600;
+      position:relative;
+      background: rgba(138,107,66,.10);
+    }
+    .note{
+      margin-top: 18px;
+      font-size: 14px;
+      line-height:1.65;
+      color: var(--muted);
+      max-width: 720px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    /* LOCATION with background image (картинка 4) */
+    .location{
+      position:relative;
+      color: #fff;
+      padding: 78px 0;
+      overflow:hidden;
+    }
+    .location::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image: url("img/location.jpg");
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.02);
+      filter: saturate(0.95) contrast(1.02);
+    }
+    .location::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(180deg, rgba(15,47,35,.70), rgba(18,58,42,.78));
+    }
+    .location .wrap{ position:relative; z-index:2; }
+    .location .card{
+      background: rgba(18,58,42,.35);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 18px 60px rgba(0,0,0,.25);
+    }
+    .location h2{ color:#fff; }
+    .locText{
+      margin-top: 10px;
+      color: rgba(255,255,255,.92);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+    .buttons{
+      margin-top: 18px;
+      display:flex;
+      gap: 12px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      text-decoration:none;
+      font-weight:600;
+      border: 1px solid rgba(255,255,255,.28);
+      transition: .2s ease;
+      cursor:pointer;
+    }
+    .btnPrimary{
+      background: rgba(138,107,66,.92);
+      color:#fff;
+      border-color: rgba(138,107,66,.9);
+    }
+    .btnPrimary:hover{ background: rgba(111,82,48,.95); }
+    .btnGhost{
+      background: rgba(255,255,255,.12);
+      color:#fff;
+    }
+    .btnGhost:hover{ background: rgba(255,255,255,.18); }
+
+    /* PROGRAM (как реф 1 по настроению) */
+    .programTitle{
+      font-family:'Playfair Display', serif;
+      font-size: 40px;
+      letter-spacing: 2px;
+    }
+    .programList{
+      margin: 20px auto 0;
+      width: min(520px, 92vw);
+      text-align:left;
+    }
+    .programRow{
+      display:grid;
+      grid-template-columns: 140px 18px 1fr;
+      gap: 10px;
+      padding: 10px 0;
+      align-items:center;
+      color: rgba(31,36,33,.86);
+      border-bottom: 1px solid rgba(138,107,66,.14);
+    }
+    .programRow:last-child{ border-bottom:none; }
+    .time{
+      font-variant-numeric: tabular-nums;
+      letter-spacing:.4px;
+      color: rgba(18,58,42,.95);
+      font-weight:600;
+    }
+    .pipe{
+      text-align:center;
+      color: rgba(138,107,66,.8);
+      font-weight:600;
+    }
+    .event{
+      color: rgba(31,36,33,.82);
+    }
+    .programRef{
+      margin-top: 24px;
+      max-width: 340px;
+      width: 90%;
+      border-radius: 18px;
+      box-shadow: 0 16px 40px rgba(0,0,0,.12);
+      border: 1px solid rgba(138,107,66,.18);
+    }
+
+    /* DRESS CODE */
+    .dressText{
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .paletteImg{
+      margin-top: 18px;
+      width: min(560px, 92vw);
+      border-radius: 18px;
+      box-shadow: 0 16px 44px rgba(0,0,0,.10);
+      border: 1px solid rgba(138,107,66,.18);
+    }
+
+    /* RSVP */
+    form{ margin-top: 10px; }
+    .field{
+      margin: 10px auto;
+      width: min(420px, 92vw);
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      align-items:center;
+    }
+    input, select{
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(18,58,42,.22);
+      background: rgba(255,255,255,.75);
+      font-size: 16px;
+      outline:none;
+    }
+    input:focus, select:focus{
+      border-color: rgba(138,107,66,.55);
+      box-shadow: 0 0 0 4px rgba(138,107,66,.12);
+    }
+    .small{
+      font-size: 13px;
+      color: rgba(31,36,33,.65);
+      margin-top: 10px;
+      line-height:1.5;
+    }
+
+    /* Footer spacing */
+    .bottomSpace{ padding-bottom: 90px; }
+
+    @media (max-width: 520px){
+      h1{ font-size: 38px; }
+      h2{ font-size: 30px; }
+      .programRow{ grid-template-columns: 128px 16px 1fr; }
     }
   </style>
 </head>
+
 <body>
 
-  <section>
-    <h1>Кирилл & Дарья</h1>
-    <p>Мы женимся!</p>
-    <p class="date">13 июня 2026</p>
-  </section>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="names">
+        <h1>Кирилл</h1>
+        <div class="heart">♥</div>
+        <h1>Дарья</h1>
+      </div>
+      <div class="divider"></div>
 
-  <section>
-    <div class="card">
-      <h2>Когда и где</h2>
-      <p><strong>Дата:</strong> 13 июня 2026</p>
-      <p><strong>Время:</strong> 16:00</p>
-      <p><strong>Адрес:</strong> Английская набережная, 70</p>
-      <p><strong>Город:</strong> Санкт-Петербург</p>
-    </div>
-  </section>
-
-  <section>
-    <div class="card">
-      <h2>Дресс-код</h2>
-      <p>Будем рады видеть вас в классическом стиле ✨</p>
-    </div>
-  </section>
-
-  <section>
-    <div class="card">
-      <h2>Подтвердите участие</h2>
-      <form action="https://formspree.io/f/mreajlkn" method="POST">
-        <input type="text" name="name" placeholder="Ваше имя" required />
-        <select name="attendance" required>
-          <option value="">Вы придёте?</option>
-          <option value="yes">Да, с радостью!</option>
-          <option value="no">К сожалению, не смогу</option>
-        </select>
-        <br>
-        <button class="btn" type="submit">Отправить</button>
-      </form>
-      <p style="font-size: 14px; color: #777; margin-top: 10px;">
-        После отправки вы увидите подтверждение
+      <p class="intro">
+        Мы давно ждали момента, когда вместе с вами сможем разделить самый важный и счастливый день в нашей жизни — день нашей свадьбы!
       </p>
     </div>
   </section>
+
+  <!-- DATE (календарь) -->
+  <section>
+    <div class="wrap">
+      <div class="card">
+        <div class="dateTitle">Дата бракосочетания</div>
+
+        <div class="monthRow">
+          <div class="month">июнь</div>
+          <div class="year">2026</div>
+        </div>
+
+        <div class="calendar" aria-label="Календарь на июнь 2026">
+          <div class="dow">
+            <div>ПН</div><div>ВТ</div><div>СР</div><div>ЧТ</div><div>ПТ</div><div>СБ</div><div>ВС</div>
+          </div>
+          <div class="days">
+            <!-- Июнь 2026 начинается с ПН -->
+            <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div>
+            <div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div class="active">13</div><div>14</div>
+            <div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div>
+            <div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div>
+            <div>29</div><div>30</div><div class="empty">0</div><div class="empty">0</div><div class="empty">0</div><div class="empty">0</div><div class="empty">0</div>
+          </div>
+        </div>
+
+        <p class="note">
+          Начало мероприятия ориентировочно в <strong>16:00</strong>. Если что-то поменяется — мы обязательно сообщим.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION (фон картинка 4) -->
+  <section class="location">
+    <div class="wrap">
+      <div class="card">
+        <h2>Когда и где</h2>
+        <p class="locText">
+          <strong>13.06.2026</strong> • <strong>16:00</strong><br/>
+          Санкт-Петербург, Английская набережная, 70
+        </p>
+
+        <div class="buttons">
+          <!-- Если хочешь, вставь ссылки на Яндекс/Google карты и такси -->
+          <a class="btn btnPrimary" href="#" target="_blank" rel="noopener">Карта проезда</a>
+          <a class="btn btnGhost" href="#" target="_blank" rel="noopener">Заказать такси</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAM -->
+  <section>
+    <div class="wrap">
+      <div class="card">
+        <div class="programTitle">WEDDING<br/>PROGRAM</div>
+
+        <div class="programList" role="list">
+          <div class="programRow" role="listitem">
+            <div class="time">15:00–15:30</div><div class="pipe">|</div><div class="event">Сбор гостей</div>
+          </div>
+          <div class="programRow" role="listitem">
+            <div class="time">15:10–15:30</div><div class="pipe">|</div><div class="event">Фуршет</div>
+          </div>
+          <div class="programRow" role="listitem">
+            <div class="time">15:30–16:00</div><div class="pipe">|</div><div class="event">Церемония</div>
+          </div>
+          <div class="programRow" role="listitem">
+            <div class="time">16:10–21:00</div><div class="pipe">|</div><div class="event">Банкет</div>
+          </div>
+          <div class="programRow" role="listitem">
+            <div class="time">21:00–22:00</div><div class="pipe">|</div><div class="event">Торт, фейерверк</div>
+          </div>
+        </div>
+
+        <!-- Если хочешь, можно показать и сам реф-картинкой (не обязательно) -->
+        <img class="programRef" src="img/program.jpg" alt="Пример оформления программы" />
+      </div>
+    </div>
+  </section>
+
+  <!-- DRESS CODE -->
+  <section>
+    <div class="wrap">
+      <div class="card">
+        <h2>Дресс-код</h2>
+        <p class="dressText">
+          Мы будем рады, если вы поддержите атмосферу вечера и выберете наряды в тёмно-зелёных и коричневых оттенках.
+        </p>
+        <img class="paletteImg" src="img/palette.jpg" alt="Палитра дресс-кода" />
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="bottomSpace">
+    <div class="wrap">
+      <div class="card">
+        <h2>Подтвердите участие</h2>
+
+        <form action="https://formspree.io/f/ВАШ_ID" method="POST">
+          <div class="field">
+            <input type="text" name="name" placeholder="Ваше имя и фамилия" required />
+
+            <select id="attendance" name="attendance" required>
+              <option value="">Вы придёте?</option>
+              <option value="yes">Да, с радостью!</option>
+              <option value="no">К сожалению, не смогу</option>
+            </select>
+
+            <select id="guests" name="guests" required>
+              <option value="">Сколько человек придёт?</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+
+            <button class="btn btnPrimary" type="submit">Отправить</button>
+          </div>
+        </form>
+
+        <div class="small">
+          После отправки вы увидите подтверждение. Если планы изменятся — напишите нам.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Прячем выбор количества, если человек не сможет прийти
+    const attendance = document.getElementById('attendance');
+    const guests = document.getElementById('guests');
+
+    function syncGuests(){
+      if (attendance.value === 'no') {
+        guests.value = '1';
+        guests.required = false;
+        guests.style.display = 'none';
+      } else {
+        guests.required = true;
+        guests.style.display = '';
+      }
+    }
+
+    attendance.addEventListener('change', syncGuests);
+    syncGuests();
+  </script>
 
 </body>
 </html>
