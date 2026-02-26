@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Приглашение на свадьбу Кирилла и Дарьи</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: #f8f5f1;
+      color: #2b2b2b;
+      text-align: center;
+    }
+    section {
+      padding: 70px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    .date {
+      font-size: 20px;
+      letter-spacing: 2px;
+      margin-top: 10px;
+    }
+    .card {
+      background: #ffffff;
+      padding: 40px 20px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 14px 28px;
+      background: #b99b6b;
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    .btn:hover {
+      background: #a7895d;
+    }
+    input, select {
+      padding: 12px;
+      margin: 10px 0;
+      width: 90%;
+      max-width: 320px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <section>
+    <h1>Кирилл & Дарья</h1>
+    <p>Мы женимся!</p>
+    <p class="date">13 июня 2026</p>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>Когда и где</h2>
+      <p><strong>Дата:</strong> 13 июня 2026</p>
+      <p><strong>Время:</strong> 16:00</p>
+      <p><strong>Адрес:</strong> Английская набережная, 70</p>
+      <p><strong>Город:</strong> Санкт-Петербург</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>Дресс-код</h2>
+      <p>Будем рады видеть вас в классическом стиле ✨</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>Подтвердите участие</h2>
+      <form action="https://formspree.io/f/mreajlkn" method="POST">
+        <input type="text" name="name" placeholder="Ваше имя" required />
+        <select name="attendance" required>
+          <option value="">Вы придёте?</option>
+          <option value="yes">Да, с радостью!</option>
+          <option value="no">К сожалению, не смогу</option>
+        </select>
+        <br>
+        <button class="btn" type="submit">Отправить</button>
+      </form>
+      <p style="font-size: 14px; color: #777; margin-top: 10px;">
+        После отправки вы увидите подтверждение
+      </p>
+    </div>
+  </section>
+
+</body>
+</html>
