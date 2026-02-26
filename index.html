@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Приглашение на свадьбу Кирилла и Дарьи</title>
 
-  <!-- Новый шрифт -->
+  <!-- Новый шрифт (классический, читаемый) -->
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
     :root{
       --bg: #f4f0e8;
-      --card: rgba(255,255,255,.82);
+      --card: rgba(255,255,255,.84);
       --text: #1f2421;
       --muted: rgba(31,36,33,.78);
 
@@ -24,6 +24,9 @@
       --radius: 22px;
     }
 
+    /* FIX: убираем горизонтальные "уезды" на мобилках */
+    html, body { overflow-x: hidden; }
+
     *{ box-sizing: border-box; }
     body{
       margin:0;
@@ -32,6 +35,9 @@
       color: var(--text);
       text-align:center;
     }
+
+    /* FIX: изображения никогда не шире контейнера */
+    img { max-width: 100%; height: auto; display: block; }
 
     .wrap{ max-width: 980px; margin:0 auto; padding: 0 18px; }
     section{ padding: 70px 0; }
@@ -42,6 +48,8 @@
       box-shadow: var(--shadow);
       padding: 44px 18px;
       backdrop-filter: blur(6px);
+      /* FIX: чтобы содержимое (картинки) не вылезали за скругление */
+      overflow: hidden;
     }
 
     /* Заголовки */
@@ -73,16 +81,21 @@
       align-items:center;
       justify-content:center;
       gap: 12px;
-      flex-wrap: nowrap;           /* важно: не переносить */
-      white-space: nowrap;         /* важно: не переносить */
+      flex-wrap: nowrap;
+      white-space: nowrap;
       font-size: clamp(34px, 7vw, 54px);
       line-height: 1.05;
     }
+
+    /* FIX: сердце всегда как на компьютере (НЕ эмодзи) */
     .namesLine .heart{
       color: var(--brown);
       font-size: 0.70em;
       transform: translateY(0.02em);
       flex: 0 0 auto;
+      font-family:'EB Garamond', serif;
+      /* на новых Safari помогает принудить текстовый вариант */
+      font-variant-emoji: text;
     }
 
     .intro{
@@ -127,7 +140,7 @@
       margin: 0 auto;
       padding: 18px 16px 16px;
       border-radius: 18px;
-      background: rgba(255,255,255,.70);
+      background: rgba(255,255,255,.72);
       box-shadow: 0 10px 26px rgba(0,0,0,.06);
       border: 1px solid rgba(138,107,66,.18);
     }
@@ -165,7 +178,7 @@
       margin-right:auto;
     }
 
-    /* LOCATION — фон делаем напрямую, чтобы на телефоне не "уезжал" */
+    /* LOCATION */
     .location{
       color:#fff;
       padding: 78px 0;
@@ -180,6 +193,7 @@
       background: rgba(18,58,42,.35);
       border: 1px solid rgba(255,255,255,.18);
       box-shadow: 0 18px 60px rgba(0,0,0,.25);
+      overflow: hidden;
     }
     .location h2{ color:#fff; }
     .locText{
@@ -208,6 +222,9 @@
       transition: .2s ease;
       cursor:pointer;
       font-family:'Manrope', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      font-size: 13px;
     }
     .btnPrimary{
       background: rgba(138,107,66,.92);
@@ -272,23 +289,13 @@
     }
 
     /* RSVP */
-    .label{
-      width: 100%;
-      text-align:left;
-      font-size: 12px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: rgba(18,58,42,.75);
-      margin: 4px 0 -2px;
-    }
-
     form{ margin-top: 10px; }
     .field{
       margin: 10px auto;
       width: min(420px, 92vw);
       display:flex;
       flex-direction:column;
-      gap: 10px;
+      gap: 12px;
       align-items:center;
     }
     input, select{
@@ -303,6 +310,52 @@
     }
     input:focus, select:focus{
       border-color: rgba(138,107,66,.55);
+      box-shadow: 0 0 0 4px rgba(138,107,66,.12);
+    }
+
+    .rsvpLabel{
+      width:100%;
+      text-align:left;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(18,58,42,.75);
+      margin: 2px 0 -6px;
+    }
+
+    /* Вместо селекта "Вы придёте?" — две кнопки */
+    .choiceRow{
+      width:100%;
+      display:flex;
+      gap: 10px;
+    }
+    .choice{
+      flex:1;
+      position:relative;
+    }
+    .choice input{
+      position:absolute;
+      inset:0;
+      opacity:0;
+      width:100%;
+      height:100%;
+      cursor:pointer;
+    }
+    .choice span{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(18,58,42,.22);
+      background: rgba(255,255,255,.78);
+      font-size: 15px;
+      line-height:1.2;
+      user-select:none;
+      min-height: 48px;
+    }
+    .choice.active span{
+      border-color: rgba(138,107,66,.65);
       box-shadow: 0 0 0 4px rgba(138,107,66,.12);
     }
 
@@ -330,7 +383,7 @@
     <div class="wrap">
       <div class="namesLine">
         <span>Кирилл</span>
-        <span class="heart">♥</span>
+        <span class="heart">&#x2665;&#xFE0E;</span>
         <span>Дарья</span>
       </div>
 
@@ -358,7 +411,6 @@
             <div>ПН</div><div>ВТ</div><div>СР</div><div>ЧТ</div><div>ПТ</div><div>СБ</div><div>ВС</div>
           </div>
           <div class="days">
-            <!-- Июнь 2026 начинается с ПН -->
             <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div>
             <div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div class="active">13</div><div>14</div>
             <div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div>
@@ -385,15 +437,13 @@
         </p>
 
         <div class="buttons">
-          <!-- Яндекс Карты (дом 70) -->
           <a class="btn btnPrimary"
              href="https://yandex.ru/maps/2/saint-petersburg/house/angliyskaya_naberezhnaya_70/Z0kYdA9kS0cHQFtjfXVycHliZw%3D%3D/"
-             target="_blank" rel="noopener">КАРТА ПРОЕЗДА</a>
+             target="_blank" rel="noopener">Карта проезда</a>
 
-          <!-- Яндекс Go deeplink на конечную точку (координаты из Яндекс Карт) -->
           <a class="btn btnGhost"
              href="https://3.redirect.appmetrica.yandex.com/route?end-lat=59.931513&end-lon=30.284220&appmetrica_tracking_id=1178268795219780156&lang=ru"
-             target="_blank" rel="noopener">ЗАКАЗАТЬ ТАКСИ</a>
+             target="_blank" rel="noopener">Заказать такси</a>
         </div>
       </div>
     </div>
@@ -450,14 +500,22 @@
           <div class="field">
             <input type="text" name="name" placeholder="Ваше имя и фамилия" required />
 
-            <div class="label">Вы сможете прийти?</div>
-            <select id="attendance" name="attendance" required>
-              <option value="yes">Да, с радостью!</option>
-              <option value="no">К сожалению, не смогу</option>
-            </select>
+            <div class="rsvpLabel">Вы сможете прийти?</div>
+            <div class="choiceRow" id="attendanceGroup">
+              <label class="choice active">
+                <input type="radio" name="attendance" value="yes" checked>
+                <span>Да, с радостью!</span>
+              </label>
 
-            <div class="label" id="guestsLabel">Сколько человек придёт?</div>
+              <label class="choice">
+                <input type="radio" name="attendance" value="no">
+                <span>К сожалению, не смогу</span>
+              </label>
+            </div>
+
+            <div class="rsvpLabel" id="guestsLabel">Сколько человек придёт?</div>
             <select id="guests" name="guests" required>
+              <option value="" selected disabled>Выберите количество</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -465,7 +523,7 @@
               <option value="5">5</option>
             </select>
 
-            <button class="btn btnPrimary" type="submit">ОТПРАВИТЬ</button>
+            <button class="btn btnPrimary" type="submit">Отправить</button>
           </div>
         </form>
 
@@ -477,14 +535,20 @@
   </section>
 
   <script>
-    // Прячем выбор количества, если человек не сможет прийти
-    const attendance = document.getElementById('attendance');
+    // Подсветка активного варианта + скрытие "сколько человек" если "не смогу"
+    const group = document.getElementById('attendanceGroup');
     const guests = document.getElementById('guests');
     const guestsLabel = document.getElementById('guestsLabel');
 
-    function syncGuests(){
-      if (attendance.value === 'no') {
-        guests.value = '1';
+    function sync() {
+      const selected = group.querySelector('input[name="attendance"]:checked').value;
+
+      // active class
+      group.querySelectorAll('.choice').forEach(l => l.classList.remove('active'));
+      group.querySelector('input[name="attendance"]:checked').closest('.choice').classList.add('active');
+
+      if (selected === 'no') {
+        guests.value = "";
         guests.required = false;
         guests.style.display = 'none';
         guestsLabel.style.display = 'none';
@@ -495,8 +559,8 @@
       }
     }
 
-    attendance.addEventListener('change', syncGuests);
-    syncGuests();
+    group.addEventListener('change', sync);
+    sync();
   </script>
 
 </body>
