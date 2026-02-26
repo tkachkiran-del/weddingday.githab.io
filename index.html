@@ -5,18 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Приглашение на свадьбу Кирилла и Дарьи</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;500;600&display=swap" rel="stylesheet">
+  <!-- Новый шрифт -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg: #f4f0e8;        /* тёплый светлый фон */
-      --card: rgba(255,255,255,.78);
+      --bg: #f4f0e8;
+      --card: rgba(255,255,255,.82);
       --text: #1f2421;
-      --muted: rgba(31,36,33,.75);
+      --muted: rgba(31,36,33,.78);
 
-      --green: #123a2a;     /* тёмно-зелёный */
+      --green: #123a2a;
       --green2:#0f2f23;
-      --brown:#8a6b42;      /* коричневый/золото */
+      --brown:#8a6b42;
       --brown2:#6f5230;
 
       --shadow: 0 14px 40px rgba(0,0,0,.08);
@@ -26,15 +27,15 @@
     *{ box-sizing: border-box; }
     body{
       margin:0;
-      font-family:'Montserrat', sans-serif;
+      font-family:'Manrope', sans-serif;
       background: var(--bg);
       color: var(--text);
       text-align:center;
     }
 
     .wrap{ max-width: 980px; margin:0 auto; padding: 0 18px; }
-
     section{ padding: 70px 0; }
+
     .card{
       background: var(--card);
       border-radius: var(--radius);
@@ -43,16 +44,14 @@
       backdrop-filter: blur(6px);
     }
 
+    /* Заголовки */
     h1,h2,h3{ margin:0; }
-    h1{
-      font-family:'Playfair Display', serif;
-      font-size: 46px;
-      letter-spacing: .5px;
-    }
     h2{
-      font-family:'Playfair Display', serif;
+      font-family:'EB Garamond', serif;
       font-size: 34px;
       margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
     }
 
     .divider{
@@ -64,31 +63,28 @@
     }
 
     /* HERO */
-    .hero{
-      padding-top: 86px;
-      padding-bottom: 44px;
-    }
-    .names{
+    .hero{ padding-top: 86px; padding-bottom: 44px; }
+
+    .namesLine{
+      font-family:'EB Garamond', serif;
+      font-weight: 600;
+      letter-spacing: .4px;
       display:flex;
       align-items:center;
       justify-content:center;
-      gap: 14px;
-      flex-wrap:wrap;
+      gap: 12px;
+      flex-wrap: nowrap;           /* важно: не переносить */
+      white-space: nowrap;         /* важно: не переносить */
+      font-size: clamp(34px, 7vw, 54px);
+      line-height: 1.05;
     }
-    .heart{
+    .namesLine .heart{
       color: var(--brown);
-      font-size: 22px;
-      transform: translateY(2px);
+      font-size: 0.70em;
+      transform: translateY(0.02em);
+      flex: 0 0 auto;
     }
-    .subtitle{
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.55;
-      max-width: 760px;
-      margin-left:auto;
-      margin-right:auto;
-    }
+
     .intro{
       margin-top: 16px;
       font-size: 16px;
@@ -99,11 +95,13 @@
       margin-right:auto;
     }
 
-    /* DATE CALENDAR (как реф 2 по смыслу/композиции) */
+    /* DATE CALENDAR */
     .dateTitle{
-      font-family:'Playfair Display', serif;
+      font-family:'EB Garamond', serif;
       font-size: 34px;
       margin-bottom: 18px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
     }
     .monthRow{
       display:flex;
@@ -111,7 +109,6 @@
       gap:10px;
       align-items:baseline;
       margin-bottom: 18px;
-      color: var(--green);
     }
     .monthRow .month{
       font-weight:600;
@@ -130,7 +127,7 @@
       margin: 0 auto;
       padding: 18px 16px 16px;
       border-radius: 18px;
-      background: rgba(255,255,255,.65);
+      background: rgba(255,255,255,.70);
       box-shadow: 0 10px 26px rgba(0,0,0,.06);
       border: 1px solid rgba(138,107,66,.18);
     }
@@ -142,21 +139,20 @@
     .dow div{
       font-size: 12px;
       letter-spacing: .7px;
-      color: rgba(18,58,42,.75);
+      color: rgba(18,58,42,.78);
       padding: 6px 0 8px;
     }
     .days div{
       font-size: 14px;
       padding: 9px 0;
       border-radius: 12px;
-      color: rgba(31,36,33,.85);
+      color: rgba(31,36,33,.88);
     }
     .days div.empty{ opacity:0; }
     .days div.active{
       outline: 2px solid rgba(138,107,66,.55);
       color: var(--green2);
       font-weight:600;
-      position:relative;
       background: rgba(138,107,66,.10);
     }
     .note{
@@ -169,30 +165,17 @@
       margin-right:auto;
     }
 
-    /* LOCATION with background image (картинка 4) */
+    /* LOCATION — фон делаем напрямую, чтобы на телефоне не "уезжал" */
     .location{
-      position:relative;
-      color: #fff;
+      color:#fff;
       padding: 78px 0;
-      overflow:hidden;
-    }
-    .location::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background-image: url("img/location.jpg");
+      background-image:
+        linear-gradient(180deg, rgba(15,47,35,.72), rgba(18,58,42,.80)),
+        url("img/location.jpg");
       background-size: cover;
       background-position: center;
-      transform: scale(1.02);
-      filter: saturate(0.95) contrast(1.02);
+      background-repeat: no-repeat;
     }
-    .location::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: linear-gradient(180deg, rgba(15,47,35,.70), rgba(18,58,42,.78));
-    }
-    .location .wrap{ position:relative; z-index:2; }
     .location .card{
       background: rgba(18,58,42,.35);
       border: 1px solid rgba(255,255,255,.18);
@@ -201,10 +184,11 @@
     .location h2{ color:#fff; }
     .locText{
       margin-top: 10px;
-      color: rgba(255,255,255,.92);
+      color: rgba(255,255,255,.95);
       line-height: 1.7;
       font-size: 16px;
     }
+
     .buttons{
       margin-top: 18px;
       display:flex;
@@ -216,7 +200,6 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
       padding: 13px 22px;
       border-radius: 999px;
       text-decoration:none;
@@ -224,6 +207,7 @@
       border: 1px solid rgba(255,255,255,.28);
       transition: .2s ease;
       cursor:pointer;
+      font-family:'Manrope', sans-serif;
     }
     .btnPrimary{
       background: rgba(138,107,66,.92);
@@ -237,11 +221,12 @@
     }
     .btnGhost:hover{ background: rgba(255,255,255,.18); }
 
-    /* PROGRAM (как реф 1 по настроению) */
+    /* PROGRAM */
     .programTitle{
-      font-family:'Playfair Display', serif;
-      font-size: 40px;
-      letter-spacing: 2px;
+      font-family:'EB Garamond', serif;
+      font-size: 34px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
     }
     .programList{
       margin: 20px auto 0;
@@ -254,7 +239,7 @@
       gap: 10px;
       padding: 10px 0;
       align-items:center;
-      color: rgba(31,36,33,.86);
+      color: rgba(31,36,33,.88);
       border-bottom: 1px solid rgba(138,107,66,.14);
     }
     .programRow:last-child{ border-bottom:none; }
@@ -266,20 +251,10 @@
     }
     .pipe{
       text-align:center;
-      color: rgba(138,107,66,.8);
+      color: rgba(138,107,66,.82);
       font-weight:600;
     }
-    .event{
-      color: rgba(31,36,33,.82);
-    }
-    .programRef{
-      margin-top: 24px;
-      max-width: 340px;
-      width: 90%;
-      border-radius: 18px;
-      box-shadow: 0 16px 40px rgba(0,0,0,.12);
-      border: 1px solid rgba(138,107,66,.18);
-    }
+    .event{ color: rgba(31,36,33,.84); }
 
     /* DRESS CODE */
     .dressText{
@@ -297,6 +272,16 @@
     }
 
     /* RSVP */
+    .label{
+      width: 100%;
+      text-align:left;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: rgba(18,58,42,.75);
+      margin: 4px 0 -2px;
+    }
+
     form{ margin-top: 10px; }
     .field{
       margin: 10px auto;
@@ -311,14 +296,16 @@
       padding: 13px 14px;
       border-radius: 14px;
       border: 1px solid rgba(18,58,42,.22);
-      background: rgba(255,255,255,.75);
+      background: rgba(255,255,255,.78);
       font-size: 16px;
       outline:none;
+      font-family:'Manrope', sans-serif;
     }
     input:focus, select:focus{
       border-color: rgba(138,107,66,.55);
       box-shadow: 0 0 0 4px rgba(138,107,66,.12);
     }
+
     .small{
       font-size: 13px;
       color: rgba(31,36,33,.65);
@@ -326,12 +313,11 @@
       line-height:1.5;
     }
 
-    /* Footer spacing */
     .bottomSpace{ padding-bottom: 90px; }
 
     @media (max-width: 520px){
-      h1{ font-size: 38px; }
       h2{ font-size: 30px; }
+      .dateTitle{ font-size: 30px; }
       .programRow{ grid-template-columns: 128px 16px 1fr; }
     }
   </style>
@@ -342,11 +328,12 @@
   <!-- HERO -->
   <section class="hero">
     <div class="wrap">
-      <div class="names">
-        <h1>Кирилл</h1>
-        <div class="heart">♥</div>
-        <h1>Дарья</h1>
+      <div class="namesLine">
+        <span>Кирилл</span>
+        <span class="heart">♥</span>
+        <span>Дарья</span>
       </div>
+
       <div class="divider"></div>
 
       <p class="intro">
@@ -355,7 +342,7 @@
     </div>
   </section>
 
-  <!-- DATE (календарь) -->
+  <!-- DATE -->
   <section>
     <div class="wrap">
       <div class="card">
@@ -387,7 +374,7 @@
     </div>
   </section>
 
-  <!-- LOCATION (фон картинка 4) -->
+  <!-- LOCATION -->
   <section class="location">
     <div class="wrap">
       <div class="card">
@@ -398,9 +385,15 @@
         </p>
 
         <div class="buttons">
-          <!-- Если хочешь, вставь ссылки на Яндекс/Google карты и такси -->
-          <a class="btn btnPrimary" href="#" target="_blank" rel="noopener">Карта проезда</a>
-          <a class="btn btnGhost" href="#" target="_blank" rel="noopener">Заказать такси</a>
+          <!-- Яндекс Карты (дом 70) -->
+          <a class="btn btnPrimary"
+             href="https://yandex.ru/maps/2/saint-petersburg/house/angliyskaya_naberezhnaya_70/Z0kYdA9kS0cHQFtjfXVycHliZw%3D%3D/"
+             target="_blank" rel="noopener">КАРТА ПРОЕЗДА</a>
+
+          <!-- Яндекс Go deeplink на конечную точку (координаты из Яндекс Карт) -->
+          <a class="btn btnGhost"
+             href="https://3.redirect.appmetrica.yandex.com/route?end-lat=59.931513&end-lon=30.284220&appmetrica_tracking_id=1178268795219780156&lang=ru"
+             target="_blank" rel="noopener">ЗАКАЗАТЬ ТАКСИ</a>
         </div>
       </div>
     </div>
@@ -410,7 +403,7 @@
   <section>
     <div class="wrap">
       <div class="card">
-        <div class="programTitle">WEDDING<br/>PROGRAM</div>
+        <div class="programTitle">Программа торжества</div>
 
         <div class="programList" role="list">
           <div class="programRow" role="listitem">
@@ -430,8 +423,6 @@
           </div>
         </div>
 
-        <!-- Если хочешь, можно показать и сам реф-картинкой (не обязательно) -->
-        <img class="programRef" src="img/program.jpg" alt="Пример оформления программы" />
       </div>
     </div>
   </section>
@@ -459,14 +450,14 @@
           <div class="field">
             <input type="text" name="name" placeholder="Ваше имя и фамилия" required />
 
+            <div class="label">Вы сможете прийти?</div>
             <select id="attendance" name="attendance" required>
-              <option value="">Вы придёте?</option>
               <option value="yes">Да, с радостью!</option>
               <option value="no">К сожалению, не смогу</option>
             </select>
 
+            <div class="label" id="guestsLabel">Сколько человек придёт?</div>
             <select id="guests" name="guests" required>
-              <option value="">Сколько человек придёт?</option>
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -474,7 +465,7 @@
               <option value="5">5</option>
             </select>
 
-            <button class="btn btnPrimary" type="submit">Отправить</button>
+            <button class="btn btnPrimary" type="submit">ОТПРАВИТЬ</button>
           </div>
         </form>
 
@@ -489,15 +480,18 @@
     // Прячем выбор количества, если человек не сможет прийти
     const attendance = document.getElementById('attendance');
     const guests = document.getElementById('guests');
+    const guestsLabel = document.getElementById('guestsLabel');
 
     function syncGuests(){
       if (attendance.value === 'no') {
         guests.value = '1';
         guests.required = false;
         guests.style.display = 'none';
+        guestsLabel.style.display = 'none';
       } else {
         guests.required = true;
         guests.style.display = '';
+        guestsLabel.style.display = '';
       }
     }
 
