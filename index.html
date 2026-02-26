@@ -1,339 +1,726 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Кирилл и Дарья — 13.06.2026</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Кирилл и Дарья — 13.06.2026</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<style>
-:root{
-  --green:#123a2a;
-  --brown:#8a6b42;
-  --bg:#f4f0e8;
-  --card:rgba(255,255,255,.88);
-}
+  <style>
+    :root{
+      --green:#123a2a;
+      --green2:#0f2f23;
+      --brown:#8a6b42;
+      --brown2:#6f5230;
 
-html{scroll-behavior:smooth;}
-body{
-  margin:0;
-  background:var(--bg);
-  font-family:'Manrope',sans-serif;
-  color:#1f2421;
-  overflow-x:hidden;
-}
+      --bg:#f4f0e8;
+      --card:rgba(255,255,255,.88);
+      --text:#1f2421;
+      --muted: rgba(31,36,33,.78);
 
-/* ===== HERO ===== */
+      --radius:28px;
+      --shadow:0 20px 60px rgba(0,0,0,.08);
+      --border:1px solid rgba(138,107,66,.15);
+    }
 
-.hero{
-  position:relative;
-  height:100vh;
-  min-height:680px;
-  overflow:hidden;
-}
+    html{ scroll-behavior:smooth; }
+    html, body{ overflow-x:hidden; }
+    *{ box-sizing:border-box; }
 
-.hero img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:contrast(.95) saturate(.9);
-  transform:scale(1.04);
-}
+    body{
+      margin:0;
+      background:var(--bg);
+      font-family:'Manrope',sans-serif;
+      color:var(--text);
+      text-align:center;
+      position:relative;
+    }
 
-.hero::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(rgba(18,58,42,.55),rgba(18,58,42,.75));
-}
+    /* мягкий фон, чтобы не было пусто */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      pointer-events:none;
+      z-index: -2;
+      opacity: .22;
+      background:
+        radial-gradient(700px 500px at 18% 20%, rgba(18,58,42,.10), transparent 60%),
+        radial-gradient(650px 480px at 82% 30%, rgba(138,107,66,.10), transparent 60%),
+        radial-gradient(760px 540px at 55% 86%, rgba(18,58,42,.08), transparent 60%);
+    }
+    body::after{
+      content:"";
+      position: fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+      opacity:.10;
+      background-image: repeating-linear-gradient(135deg, rgba(18,58,42,.10) 0 1px, transparent 1px 14px);
+      mix-blend-mode: multiply;
+    }
 
-.heroContent{
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  color:white;
-  padding:20px;
-}
+    img{ max-width:100%; height:auto; display:block; }
 
-.names{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(42px,7vw,80px);
-  letter-spacing:4px;
-  text-transform:uppercase;
-}
+    .wrap{ max-width:980px; margin:0 auto; padding:0 18px; }
 
-.names .heart{
-  color:var(--brown);
-  margin:0 12px;
-  font-variant-emoji:text;
-}
+    /* верхнее меню-якоря */
+    .topNav{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(244,240,232,.72);
+      border-bottom: 1px solid rgba(138,107,66,.12);
+    }
+    .topNav .wrap{
+      padding: 10px 18px;
+      display:flex;
+      gap: 10px;
+      justify-content:center;
+      flex-wrap: wrap;
+    }
+    .navLink{
+      text-decoration:none;
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(18,58,42,.86);
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(18,58,42,.12);
+      background: rgba(255,255,255,.55);
+      transition: .18s ease;
+    }
+    .navLink:hover{ transform: translateY(-1px); border-color: rgba(138,107,66,.35); }
 
-.dateHero{
-  margin-top:18px;
-  font-family:'Cormorant Garamond',serif;
-  font-size:22px;
-  letter-spacing:3px;
-}
+    /* HERO */
+    .hero{
+      position:relative;
+      height:min(92vh, 820px);
+      min-height:640px;
+      overflow:hidden;
+      padding:0;
+    }
+    .hero img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      filter:contrast(.95) saturate(.88);
+      transform:scale(1.04);
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(18,58,42,.40), rgba(18,58,42,.72)),
+        radial-gradient(700px 500px at 50% 25%, rgba(138,107,66,.18), transparent 60%);
+    }
+    .heroContent{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      padding: 34px 18px 40px;
+    }
+    .heroCard{
+      width:min(880px, 96vw);
+      background: rgba(244,240,232,.84);
+      border: 1px solid rgba(138,107,66,.18);
+      border-radius: 26px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.20);
+      padding: 26px 18px 22px;
+      backdrop-filter: blur(10px);
+    }
+    .namesLine{
+      font-family:'Cormorant Garamond',serif;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 12px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      font-size: clamp(34px, 7vw, 66px);
+      line-height: 1.05;
+      color: var(--green2);
+    }
+    .namesLine .heart{
+      color: var(--brown);
+      font-size: .70em;
+      font-variant-emoji: text;
+      transform: translateY(0.02em);
+      font-family:'Cormorant Garamond',serif;
+      flex:0 0 auto;
+    }
 
-.decorLine{
-  width:120px;
-  height:1px;
-  background:linear-gradient(to right,transparent,var(--brown),transparent);
-  margin:20px auto;
-}
+    .decorLine{
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--brown), transparent);
+      margin: 16px auto 0;
+      border-radius: 99px;
+    }
 
-/* ===== SECTIONS ===== */
+    .intro{
+      margin: 14px auto 0;
+      max-width: 820px;
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(31,36,33,.78);
+    }
 
-section{
-  padding:90px 20px;
-  text-align:center;
-}
+    /* sections */
+    section{ padding: 86px 0; }
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      border:var(--border);
+      padding: 58px 28px;
+      overflow:hidden; /* чтобы ничего не "вылезало" за скругления */
+    }
 
-.card{
-  max-width:900px;
-  margin:auto;
-  background:var(--card);
-  padding:60px 30px;
-  border-radius:28px;
-  box-shadow:0 20px 60px rgba(0,0,0,.08);
-  border:1px solid rgba(138,107,66,.15);
-}
+    h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size: 42px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin: 0 0 18px;
+      color: var(--green2);
+    }
 
-h2{
-  font-family:'Cormorant Garamond',serif;
-  font-size:40px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  margin-bottom:20px;
-  color:var(--green);
-}
+    /* календарь */
+    .monthRow{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      align-items:baseline;
+      margin-bottom: 18px;
+      font-family:'Cormorant Garamond',serif;
+      color: var(--brown2);
+      letter-spacing: 1px;
+      font-size: 18px;
+    }
+    .calendar{
+      width: min(460px, 92vw);
+      margin: 0 auto;
+      padding: 18px 16px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.74);
+      box-shadow: 0 10px 26px rgba(0,0,0,.06);
+      border: 1px solid rgba(138,107,66,.18);
+    }
+    .dow, .days{
+      display:grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+    .dow div{
+      font-size: 12px;
+      letter-spacing: .9px;
+      text-transform: uppercase;
+      color: rgba(18,58,42,.75);
+      padding: 6px 0 8px;
+    }
+    .days div{
+      font-size: 15px;
+      padding: 10px 0;
+      border-radius: 12px;
+      color: rgba(31,36,33,.88);
+    }
+    .days div.empty{ opacity:0; }
+    .days div.active{
+      outline: 2px solid rgba(138,107,66,.55);
+      color: var(--green2);
+      font-weight:700;
+      background: rgba(138,107,66,.10);
+    }
+    .note{
+      margin: 18px auto 0;
+      max-width: 720px;
+      font-size: 14px;
+      line-height:1.65;
+      color: var(--muted);
+    }
 
-/* ===== PROGRAM ===== */
+    /* location */
+    .location{
+      color:#fff;
+      padding: 86px 0;
+      background:
+        linear-gradient(180deg, rgba(15,47,35,.74), rgba(18,58,42,.86)),
+        url("img/location.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .location .card{
+      background: rgba(18,58,42,.33);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 18px 60px rgba(0,0,0,.25);
+      color:#fff;
+    }
+    .location h2{ color:#fff; }
+    .locText{
+      margin-top: 6px;
+      color: rgba(255,255,255,.95);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+    .buttons{
+      margin-top: 18px;
+      display:flex;
+      gap: 12px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 14px 22px;
+      border-radius: 999px;
+      text-decoration:none;
+      font-weight:600;
+      border: 1px solid rgba(255,255,255,.28);
+      transition: .2s ease;
+      cursor:pointer;
+      font-family:'Manrope', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      font-size: 12px;
+      min-height: 48px;
+    }
+    .btnPrimary{
+      background: rgba(138,107,66,.92);
+      color:#fff;
+      border-color: rgba(138,107,66,.9);
+    }
+    .btnPrimary:hover{ background: rgba(111,82,48,.95); }
+    .btnGhost{
+      background: rgba(255,255,255,.12);
+      color:#fff;
+    }
+    .btnGhost:hover{ background: rgba(255,255,255,.18); }
 
-.programRow{
-  display:grid;
-  grid-template-columns:140px 20px 1fr;
-  gap:10px;
-  text-align:left;
-  padding:12px 0;
-  border-bottom:1px solid rgba(138,107,66,.15);
-}
-.programRow:last-child{border:none;}
-.programRow .time{
-  font-weight:600;
-  color:var(--green);
-}
+    /* программа */
+    .programList{
+      margin: 18px auto 0;
+      width: min(560px, 92vw);
+      text-align:left;
+    }
+    .programRow{
+      display:grid;
+      grid-template-columns: 140px 18px 1fr;
+      gap: 10px;
+      padding: 12px 0;
+      align-items:center;
+      border-bottom: 1px solid rgba(138,107,66,.14);
+      color: rgba(31,36,33,.88);
+    }
+    .programRow:last-child{ border-bottom:none; }
+    .time{
+      font-variant-numeric: tabular-nums;
+      letter-spacing:.4px;
+      color: rgba(18,58,42,.95);
+      font-weight:700;
+    }
+    .pipe{
+      text-align:center;
+      color: rgba(138,107,66,.82);
+      font-weight:700;
+    }
 
-/* ===== LOCATION ===== */
+    /* дресс-код */
+    .dressText{
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    /* FIX: чтобы картинка не уезжала и не создавала горизонтальный скролл */
+    .paletteWrap{
+      width:100%;
+      max-width: 560px;
+      margin: 18px auto 0;
+      border-radius: 20px;
+      overflow:hidden;
+      border: 1px solid rgba(138,107,66,.18);
+      box-shadow: 0 16px 44px rgba(0,0,0,.10);
+      background: rgba(255,255,255,.5);
+    }
+    .paletteImg{
+      width:100%;
+      height:auto;
+      display:block;
+      object-fit:cover;
+    }
 
-.location{
-  color:white;
-  background:
-  linear-gradient(rgba(18,58,42,.75),rgba(18,58,42,.85)),
-  url("img/location.jpg");
-  background-size:cover;
-  background-position:center;
-}
+    /* RSVP */
+    form{ margin-top: 10px; }
 
-.location .card{
-  background:rgba(18,58,42,.35);
-  border:1px solid rgba(255,255,255,.2);
-  color:white;
-}
+    .field{
+      margin: 10px auto 0;
+      width: min(460px, 92vw);
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+      align-items:center;
+    }
 
-.button{
-  display:inline-block;
-  padding:14px 26px;
-  margin:10px;
-  border-radius:50px;
-  font-size:12px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  text-decoration:none;
-  border:1px solid rgba(255,255,255,.3);
-  transition:.2s;
-}
+    input, select{
+      width: 100%;
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(18,58,42,.20);
+      background: rgba(255,255,255,.84);
+      font-size: 16px;
+      outline:none;
+      font-family:'Manrope', sans-serif;
+      min-height: 52px;
+    }
 
-.primary{
-  background:var(--brown);
-  color:white;
-}
-.ghost{
-  color:white;
-}
+    input:focus, select:focus{
+      border-color: rgba(138,107,66,.55);
+      box-shadow: 0 0 0 4px rgba(138,107,66,.12);
+    }
 
-/* ===== DRESS ===== */
+    .rsvpLabel{
+      width:100%;
+      text-align:left;
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(18,58,42,.75);
+      margin: 4px 0 -6px;
+    }
 
-.palette{
-  margin:20px auto 0;
-  max-width:520px;
-  border-radius:20px;
-  overflow:hidden;
-}
+    .choiceRow{
+      width:100%;
+      display:flex;
+      gap: 10px;
+      flex-direction: column; /* на телефоне ровнее */
+    }
+    @media (min-width: 700px){
+      .choiceRow{ flex-direction: row; }
+    }
 
-/* ===== RSVP ===== */
+    .choice{
+      flex:1;
+      position:relative;
+    }
+    .choice input{
+      position:absolute;
+      inset:0;
+      opacity:0;
+      cursor:pointer;
+    }
+    .choice span{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(18,58,42,.20);
+      background: rgba(255,255,255,.84);
+      font-size: 15px;
+      line-height:1.2;
+      user-select:none;
+      min-height: 52px;
+      text-align:center;
+      width:100%;
+    }
+    .choice.active span{
+      border-color: rgba(138,107,66,.70);
+      box-shadow: 0 0 0 4px rgba(138,107,66,.12);
+    }
 
-input,select{
-  width:100%;
-  max-width:420px;
-  padding:14px;
-  border-radius:14px;
-  border:1px solid rgba(18,58,42,.2);
-  margin-bottom:14px;
-  font-size:16px;
-}
+    .submit{
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 16px 22px;
+      background: rgba(138,107,66,.92);
+      color:#fff;
+      font-weight:700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      cursor:pointer;
+      min-height: 52px;
+    }
+    .submit:hover{ background: rgba(111,82,48,.95); }
 
-.choiceWrap{
-  max-width:420px;
-  margin:auto;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
+    .small{
+      font-size: 13px;
+      color: rgba(31,36,33,.65);
+      margin-top: 12px;
+      line-height:1.5;
+    }
 
-.choice{
-  position:relative;
-}
-.choice input{
-  position:absolute;
-  inset:0;
-  opacity:0;
-}
-.choice span{
-  display:block;
-  padding:14px;
-  border-radius:14px;
-  border:1px solid rgba(18,58,42,.2);
-  background:white;
-}
-.choice.active span{
-  border-color:var(--brown);
-  box-shadow:0 0 0 4px rgba(138,107,66,.15);
-}
+    .bottomSpace{ padding-bottom: 96px; }
 
-.submit{
-  background:var(--brown);
-  color:white;
-  border:none;
-  border-radius:50px;
-  padding:16px 40px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  cursor:pointer;
-}
+    @media (max-width: 520px){
+      .card{ padding: 46px 18px; }
+      h2{ font-size: 36px; }
+      .programRow{ grid-template-columns: 128px 16px 1fr; }
+      .hero{ min-height: 620px; }
+    }
 
-/* ===== ANIMATION blur → sharp ===== */
-
-.reveal{
-  opacity:0;
-  transform:translateY(20px);
-  filter:blur(10px);
-  transition:1s ease;
-}
-.reveal.show{
-  opacity:1;
-  transform:translateY(0);
-  filter:blur(0);
-}
-
-</style>
+    /* ====== АНИМАЦИИ (blur → sharp) ====== */
+    .reveal{
+      opacity: 0;
+      transform: translateY(18px);
+      filter: blur(10px);
+      transition: opacity .85s ease, transform .85s ease, filter .95s ease;
+      will-change: opacity, transform, filter;
+    }
+    .reveal.is-visible{
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+    .delay-1{ transition-delay: .06s; }
+    .delay-2{ transition-delay: .12s; }
+    .delay-3{ transition-delay: .18s; }
+  </style>
 </head>
 
 <body>
 
-<section class="hero">
-  <img src="img/couple.jpg" alt="">
-  <div class="heroContent reveal show">
-    <div class="names">Кирилл <span class="heart">&#x2665;&#xFE0E;</span> Дарья</div>
-    <div class="decorLine"></div>
-    <div class="dateHero">13 июня 2026 · 16:00</div>
-  </div>
-</section>
-
-<section class="reveal">
-  <div class="card">
-    <h2>Программа торжества</h2>
-    <div class="programRow"><div class="time">15:00–15:30</div><div>|</div><div>Сбор гостей</div></div>
-    <div class="programRow"><div class="time">15:30–16:00</div><div>|</div><div>Церемония</div></div>
-    <div class="programRow"><div class="time">16:10–21:00</div><div>|</div><div>Банкет</div></div>
-    <div class="programRow"><div class="time">21:00–22:00</div><div>|</div><div>Торт, фейерверк</div></div>
-  </div>
-</section>
-
-<section class="location reveal">
-  <div class="card">
-    <h2>Когда и где</h2>
-    Санкт-Петербург<br>
-    Английская набережная, 70
-    <div style="margin-top:20px;">
-      <a class="button primary" href="https://yandex.ru/maps/2/saint-petersburg/house/angliyskaya_naberezhnaya_70/Z0kYdA9kS0cHQFtjfXVycHliZw%3D%3D/" target="_blank">Карта проезда</a>
-      <a class="button ghost" href="https://3.redirect.appmetrica.yandex.com/route?end-lat=59.931513&end-lon=30.284220&appmetrica_tracking_id=1178268795219780156&lang=ru" target="_blank">Заказать такси</a>
+  <div class="topNav">
+    <div class="wrap">
+      <a class="navLink" href="#date">Дата</a>
+      <a class="navLink" href="#place">Место</a>
+      <a class="navLink" href="#program">Программа</a>
+      <a class="navLink" href="#dress">Дресс-код</a>
+      <a class="navLink" href="#rsvp">Подтверждение</a>
     </div>
   </div>
-</section>
 
-<section class="reveal">
-  <div class="card">
-    <h2>Дресс-код</h2>
-    Мы будем рады видеть вас в тёмно-зелёных и коричневых оттенках.
-    <img class="palette" src="img/palette.jpg" alt="">
-  </div>
-</section>
-
-<section class="reveal">
-  <div class="card">
-    <h2>Подтвердите участие</h2>
-    <form action="https://formspree.io/f/ВАШ_ID" method="POST">
-      <input type="text" name="name" placeholder="Ваше имя и фамилия" required>
-
-      <div class="choiceWrap" id="choices">
-        <label class="choice active">
-          <input type="radio" name="attendance" value="yes" checked>
-          <span>Да, с радостью!</span>
-        </label>
-        <label class="choice">
-          <input type="radio" name="attendance" value="no">
-          <span>К сожалению, не смогу</span>
-        </label>
+  <!-- HERO -->
+  <section class="hero">
+    <img src="img/couple.jpg" alt="Кирилл и Дарья">
+    <div class="heroContent">
+      <div class="heroCard reveal is-visible">
+        <div class="namesLine">
+          <span>Кирилл</span>
+          <span class="heart">&#x2665;&#xFE0E;</span>
+          <span>Дарья</span>
+        </div>
+        <div class="decorLine"></div>
+        <p class="intro">
+          Мы давно ждали момента, когда вместе с вами сможем разделить самый важный и счастливый день в нашей жизни - день нашей свадьбы!
+        </p>
       </div>
+    </div>
+  </section>
 
-      <select name="guests" required>
-        <option disabled selected>Сколько человек придёт?</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-      </select>
+  <!-- DATE (календарь как было) -->
+  <section id="date">
+    <div class="wrap">
+      <div class="card reveal delay-1">
+        <h2>Дата бракосочетания</h2>
 
-      <button class="submit">Отправить</button>
-    </form>
-  </div>
-</section>
+        <div class="monthRow">
+          <div><strong>июнь</strong></div>
+          <div>2026</div>
+        </div>
 
-<script>
-// reveal animation
-const reveals=document.querySelectorAll('.reveal');
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.classList.add('show');
+        <div class="calendar" aria-label="Календарь на июнь 2026">
+          <div class="dow">
+            <div>ПН</div><div>ВТ</div><div>СР</div><div>ЧТ</div><div>ПТ</div><div>СБ</div><div>ВС</div>
+          </div>
+          <div class="days">
+            <!-- Июнь 2026 начинается с ПН -->
+            <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div>
+            <div>8</div><div>9</div><div>10</div><div>11</div><div>12</div><div class="active">13</div><div>14</div>
+            <div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div>20</div><div>21</div>
+            <div>22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div>
+            <div>29</div><div>30</div><div class="empty">0</div><div class="empty">0</div><div class="empty">0</div><div class="empty">0</div><div class="empty">0</div>
+          </div>
+        </div>
+
+        <p class="note">
+          Начало мероприятия ориентировочно в <strong>16:00</strong>. Если что-то поменяется — мы обязательно сообщим.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section id="place" class="location">
+    <div class="wrap">
+      <div class="card reveal delay-1">
+        <h2>Когда и где</h2>
+        <p class="locText">
+          <strong>13.06.2026</strong> • <strong>16:00</strong><br/>
+          Санкт-Петербург, Английская набережная, 70
+        </p>
+
+        <div class="buttons">
+          <a class="btn btnPrimary"
+             href="https://yandex.ru/maps/2/saint-petersburg/house/angliyskaya_naberezhnaya_70/Z0kYdA9kS0cHQFtjfXVycHliZw%3D%3D/"
+             target="_blank" rel="noopener">Карта проезда</a>
+
+          <a class="btn btnGhost"
+             href="https://3.redirect.appmetrica.yandex.com/route?end-lat=59.931513&end-lon=30.284220&appmetrica_tracking_id=1178268795219780156&lang=ru"
+             target="_blank" rel="noopener">Заказать такси</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAM -->
+  <section id="program">
+    <div class="wrap">
+      <div class="card reveal delay-1">
+        <h2>Программа торжества</h2>
+
+        <div class="programList" role="list">
+          <div class="programRow" role="listitem">
+            <div class="time">15:00–15:30</div><div class="pipe">|</div><div>Сбор гостей</div>
+          </div>
+          <div class="programRow" role="listitem">
+            <div class="time">15:10–15:30</div><div class="pipe">|</div><div>Фуршет</div>
+          </div>
+          <div class="programRow" role="listitem">
+            <div class="time">15:30–16:00</div><div class="pipe">|</div><div>Церемония</div>
+          </div>
+          <div class="programRow" role="listitem">
+            <div class="time">16:10–21:00</div><div class="pipe">|</div><div>Банкет</div>
+          </div>
+          <div class="programRow" role="listitem">
+            <div class="time">21:00–22:00</div><div class="pipe">|</div><div>Торт, фейерверк</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DRESS CODE -->
+  <section id="dress">
+    <div class="wrap">
+      <div class="card reveal delay-1">
+        <h2>Дресс-код</h2>
+        <p class="dressText">
+          Мы будем рады видеть вас в тёмно-зелёных и коричневых оттенках.
+        </p>
+
+        <div class="paletteWrap">
+          <img class="paletteImg" src="img/palette.jpg" alt="Палитра дресс-кода">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section id="rsvp" class="bottomSpace">
+    <div class="wrap">
+      <div class="card reveal delay-1">
+        <h2>Подтвердите участие</h2>
+
+        <form action="https://formspree.io/f/ВАШ_ID" method="POST">
+          <div class="field">
+            <input type="text" name="name" placeholder="Ваше имя и фамилия" required />
+
+            <div class="rsvpLabel">Вы сможете прийти?</div>
+            <div class="choiceRow" id="attendanceGroup">
+              <label class="choice active">
+                <input type="radio" name="attendance" value="yes" checked>
+                <span>Да, с радостью!</span>
+              </label>
+
+              <label class="choice">
+                <input type="radio" name="attendance" value="no">
+                <span>К сожалению, не смогу</span>
+              </label>
+            </div>
+
+            <div class="rsvpLabel" id="guestsLabel">Сколько человек придёт?</div>
+            <select id="guests" name="guests" required>
+              <option value="" selected disabled>Выберите количество</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+
+            <button class="submit" type="submit">Отправить</button>
+          </div>
+        </form>
+
+        <div class="small">
+          После отправки вы увидите подтверждение. Если планы изменятся — напишите нам.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // ====== RSVP: подсветка активного варианта + скрытие гостей при "не смогу" ======
+    const group = document.getElementById('attendanceGroup');
+    const guests = document.getElementById('guests');
+    const guestsLabel = document.getElementById('guestsLabel');
+
+    function syncRSVP() {
+      const selected = group.querySelector('input[name="attendance"]:checked').value;
+
+      group.querySelectorAll('.choice').forEach(l => l.classList.remove('active'));
+      group.querySelector('input[name="attendance"]:checked').closest('.choice').classList.add('active');
+
+      if (selected === 'no') {
+        guests.value = "";
+        guests.required = false;
+        guests.style.display = 'none';
+        guestsLabel.style.display = 'none';
+      } else {
+        guests.required = true;
+        guests.style.display = '';
+        guestsLabel.style.display = '';
+      }
     }
-  });
-},{threshold:.15});
-reveals.forEach(el=>observer.observe(el));
+    group.addEventListener('change', syncRSVP);
+    syncRSVP();
 
-// rsvp highlight
-const choiceWrap=document.getElementById('choices');
-choiceWrap.addEventListener('change',()=>{
-  document.querySelectorAll('.choice').forEach(c=>c.classList.remove('active'));
-  choiceWrap.querySelector('input:checked').closest('.choice').classList.add('active');
-});
-</script>
+    // ====== Плавное появление блоков (blur → sharp) ======
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      }
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => {
+      if (!el.classList.contains('is-visible')) io.observe(el);
+    });
+
+    // ====== Мягкая прокрутка по якорям ======
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (ev) => {
+        const id = a.getAttribute('href');
+        const target = document.querySelector(id);
+        if (!target) return;
+        ev.preventDefault();
+
+        const topNav = document.querySelector('.topNav');
+        const navH = topNav ? topNav.getBoundingClientRect().height : 0;
+        const y = target.getBoundingClientRect().top + window.scrollY - navH - 10;
+
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      });
+    });
+  </script>
 
 </body>
 </html>
